@@ -28,7 +28,7 @@ const nextConfig: NextConfig = {
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@supabase/phoenix': path.resolve('./node_modules/@supabase/phoenix/priv/static/phoenix.js'),
+      '@supabase/phoenix': path.resolve('./node_modules/@supabase/phoenix/priv/static/phoenix.cjs.js'),
     };
     return config;
   },
