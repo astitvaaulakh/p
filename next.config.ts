@@ -1,3 +1,4 @@
+import path from 'path';
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
@@ -27,7 +28,7 @@ const nextConfig: NextConfig = {
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@supabase/phoenix': 'E:/web code/p/node_modules/@supabase/phoenix/priv/static/phoenix.js',
+      '@supabase/phoenix': path.resolve(process.cwd(), 'node_modules/@supabase/phoenix/priv/static/phoenix.js'),
     };
     return config;
   },
