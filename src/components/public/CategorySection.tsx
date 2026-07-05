@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { ChevronRight } from 'lucide-react';
 import { ChevronRight } from 'lucide-react';
 import { Category, Product } from '@/lib/types';
 import ProductCard from './ProductCard';

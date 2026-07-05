@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
-import { Search, X, ExternalLink, ArrowRight } from 'lucide-react';
+import { Search, X, ExternalLink } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { Product } from '@/lib/types';
 import { truncate } from '@/lib/utils';

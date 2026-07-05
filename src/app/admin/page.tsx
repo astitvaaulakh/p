@@ -138,7 +138,7 @@ export default async function AdminDashboardPage() {
                     {product.title}
                   </p>
                   <p className="text-xs text-[#ADB5BD]">
-                    {(product.categories as { name: string } | null)?.name ?? 'Uncategorized'}
+                    {(product.categories as unknown as { name: string } | null)?.name ?? 'Uncategorized'}
                   </p>
                 </div>
                 <p className="text-xs text-[#ADB5BD]">

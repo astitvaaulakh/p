@@ -3,6 +3,8 @@ import { Category, Product } from '@/lib/types';
 import CategorySection from '@/components/public/CategorySection';
 import RecentlyAdded from '@/components/public/RecentlyAdded';
 
+export const dynamic = 'force-dynamic';
+
 // Revalidate every 60 seconds for near-real-time updates
 export const revalidate = 60;
 
