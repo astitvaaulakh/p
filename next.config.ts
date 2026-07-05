@@ -24,6 +24,13 @@ const nextConfig: NextConfig = {
   },
   // Optimize for Vercel deployment
   poweredByHeader: false,
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@supabase/phoenix': 'E:/web code/p/node_modules/@supabase/phoenix/priv/static/phoenix.js',
+    };
+    return config;
+  },
 };
 
 export default nextConfig;
