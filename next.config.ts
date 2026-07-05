@@ -1,4 +1,3 @@
-import path from 'path';
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
@@ -25,13 +24,6 @@ const nextConfig: NextConfig = {
   },
   // Optimize for Vercel deployment
   poweredByHeader: false,
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@supabase/phoenix': path.resolve('./node_modules/@supabase/phoenix/priv/static/phoenix.cjs.js'),
-    };
-    return config;
-  },
 };
 
 export default nextConfig;
