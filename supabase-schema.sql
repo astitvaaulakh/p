@@ -1,22 +1,12 @@
 -- ============================================================
--- 1minproduct — Supabase Database Schema (Reset & Recreate)
+-- 1minproduct — Supabase Database Schema
 -- Run this in: Supabase Dashboard → SQL Editor → New Query
 -- ============================================================
 
 -- ────────────────────────────────────────
--- 0. CLEANUP (Ensures clean recreation)
--- ────────────────────────────────────────
-DROP TABLE IF EXISTS products CASCADE;
-DROP TABLE IF EXISTS categories CASCADE;
-
-DROP POLICY IF EXISTS "Public read product images" ON storage.objects;
-DROP POLICY IF EXISTS "Authenticated upload product images" ON storage.objects;
-DROP POLICY IF EXISTS "Authenticated delete product images" ON storage.objects;
-
--- ────────────────────────────────────────
 -- 1. CATEGORIES TABLE
 -- ────────────────────────────────────────
-CREATE TABLE categories (
+CREATE TABLE IF NOT EXISTS categories (
   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name        TEXT NOT NULL UNIQUE,
   created_at  TIMESTAMPTZ DEFAULT NOW() NOT NULL
@@ -25,7 +15,7 @@ CREATE TABLE categories (
 -- ────────────────────────────────────────
 -- 2. PRODUCTS TABLE
 -- ────────────────────────────────────────
-CREATE TABLE products (
+CREATE TABLE IF NOT EXISTS products (
   id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title           TEXT NOT NULL,
   image_url       TEXT NOT NULL,
@@ -35,11 +25,11 @@ CREATE TABLE products (
 );
 
 -- Index for faster category queries
-CREATE INDEX idx_products_category_id ON products(category_id);
-CREATE INDEX idx_products_created_at ON products(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_products_category_id ON products(category_id);
+CREATE INDEX IF NOT EXISTS idx_products_created_at ON products(created_at DESC);
 
 -- ────────────────────────────────────────
--- 3. ROW LEVEL SECURITY (RLS)
+-- 3. ROW LEVEL SECURITY
 -- ────────────────────────────────────────
 ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE products    ENABLE ROW LEVEL SECURITY;
@@ -81,7 +71,7 @@ CREATE POLICY "Authenticated users can delete products"
 -- ────────────────────────────────────────
 -- 4. STORAGE BUCKET
 -- ────────────────────────────────────────
--- Ensure the storage bucket exists
+-- Run in SQL editor:
 INSERT INTO storage.buckets (id, name, public)
 VALUES ('product-images', 'product-images', true)
 ON CONFLICT (id) DO NOTHING;
@@ -102,7 +92,7 @@ CREATE POLICY "Authenticated delete product images"
   USING (bucket_id = 'product-images' AND auth.role() = 'authenticated');
 
 -- ────────────────────────────────────────
--- 5. SAMPLE DATA (optional — uncomment if needed)
+-- 5. SAMPLE DATA (optional — delete if not needed)
 -- ────────────────────────────────────────
 -- INSERT INTO categories (name) VALUES
 --   ('Electronics'),
